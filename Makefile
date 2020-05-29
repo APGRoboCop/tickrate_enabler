@@ -24,7 +24,7 @@ INCLUDES=-I$(HL2SDK)/public -I$(HL2SDK)/public/tier0 -I$(HL2SDK)/public/tier1 -I
 # Include the folder with the Source SDK libraries
 LINKFLAGS=-shared -m32 -L$(HL2SDK)/lib/linux
 
-all: check serverplugin_empty.o tickrate_enabler.so
+all: check serverplugin_empty.o Tickrate_Enabler.so
 
 serverplugin_empty.o:
 	$(CXX) $(CFLAGS) $(OPTFLAGS) $(INCLUDES) -c serverplugin_empty.cpp
@@ -35,7 +35,7 @@ Tickrate_Enabler.so:
 
 clean:
 	-rm -f serverplugin_empty.o
-	-rm -f tickrate_enabler.so
+	-rm -f Tickrate_Enabler.so
 
 check:
 	if [ "$(ENGINE)" = "false" ]; then \
