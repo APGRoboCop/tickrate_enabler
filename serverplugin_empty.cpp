@@ -62,8 +62,8 @@ private:
 // 
 // The plugin is a static singleton that is exported as an interface
 //
-CEmptyServerPlugin g_EmtpyServerPlugin;
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CEmptyServerPlugin, IServerPluginCallbacks, INTERFACEVERSION_ISERVERPLUGINCALLBACKS, g_EmtpyServerPlugin );
+CEmptyServerPlugin g_EmptyServerPlugin;
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CEmptyServerPlugin, IServerPluginCallbacks, INTERFACEVERSION_ISERVERPLUGINCALLBACKS, g_EmptyServerPlugin );
 
 //---------------------------------------------------------------------------------
 // Purpose: constructor/destructor
@@ -96,7 +96,7 @@ float GetTickInterval()
 
 	if ( CommandLine()->CheckParm( "-tickrate" ) )
 	{
-		float tickrate = CommandLine()->ParmValue( "-tickrate", 0 );
+		const float tickrate = CommandLine()->ParmValue( "-tickrate", 0 );
 		if ( tickrate > 10 )
 			tickinterval = 1.0f / tickrate;
 	}
@@ -104,15 +104,14 @@ float GetTickInterval()
 	RETURN_META_VALUE(MRES_SUPERCEDE, tickinterval );
 }
 
-
 IServerGameDLL *gamedll = NULL;
 
 //---------------------------------------------------------------------------------
 // Purpose: called when the plugin is loaded, load the interface we need from the engine
 //---------------------------------------------------------------------------------
-bool CEmptyServerPlugin::Load(	CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerFactory )
+bool CEmptyServerPlugin::Load(	CreateInterfaceFn interfaceFactory, const CreateInterfaceFn gameServerFactory )
 {
-	gamedll = (IServerGameDLL*)gameServerFactory("ServerGameDLL010",NULL);
+	gamedll = static_cast<IServerGameDLL*>(gameServerFactory("ServerGameDLL010",NULL));
 	if(!gamedll)
 	{
 		Warning("Failed to get a pointer on ServerGameDLL.\n");
@@ -200,7 +199,7 @@ void CEmptyServerPlugin::ClientPutInServer( edict_t *pEntity, char const *player
 //---------------------------------------------------------------------------------
 // Purpose: called on level start
 //---------------------------------------------------------------------------------
-void CEmptyServerPlugin::SetCommandClient( int index )
+void CEmptyServerPlugin::SetCommandClient( const int index )
 {
 	m_iClientCommandIndex = index;
 }
