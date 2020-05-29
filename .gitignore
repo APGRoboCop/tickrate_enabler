@@ -1,0 +1,14 @@
+hl2sdk-css\*
+mmsource-1.10\*
+tickrate_enabler/.vs/tickrate_enabler/v16/.suo
+tickrate_enabler/.vs/tickrate_enabler/v16/Browse.VC.db
+*.tlog
+*.pdb
+*.log
+*.dll
+*.obj
+*.so
+*.o
+*.user
+*.filters
+*.suo

@@ -151,7 +151,7 @@ void CEmptyServerPlugin::UnPause( void )
 //---------------------------------------------------------------------------------
 const char *CEmptyServerPlugin::GetPluginDescription( void )
 {
-	return "Tickrate_Enabler 0.5, updated, original by Didrole";
+	return "Tickrate_Enabler 0.6-APG, updated by RoboCop, original by Didrole";
 }
 
 //---------------------------------------------------------------------------------
