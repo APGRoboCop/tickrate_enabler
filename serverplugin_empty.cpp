@@ -28,14 +28,14 @@ public:
 
 	// IServerPluginCallbacks methods
 	virtual bool			Load(	CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerFactory );
-	virtual void			Unload( void );
-	virtual void			Pause( void );
-	virtual void			UnPause( void );
-	virtual const char     *GetPluginDescription( void );      
+	virtual void			Unload();
+	virtual void			Pause();
+	virtual void			UnPause();
+	virtual const char     *GetPluginDescription();      
 	virtual void			LevelInit( char const *pMapName );
 	virtual void			ServerActivate( edict_t *pEdictList, int edictCount, int clientMax );
 	virtual void			GameFrame( bool simulating );
-	virtual void			LevelShutdown( void );
+	virtual void			LevelShutdown();
 	virtual void			ClientActive( edict_t *pEntity );
 	virtual void			ClientDisconnect( edict_t *pEntity );
 	virtual void			ClientPutInServer( edict_t *pEntity, char const *playername );
@@ -94,12 +94,16 @@ float GetTickInterval()
 {
 	float tickinterval = DEFAULT_TICK_INTERVAL;
 
+	// Comment those lines below to use force -tickrate 100 - [APG]RoboCop[CL]
 	if ( CommandLine()->CheckParm( "-tickrate" ) )
 	{
 		const float tickrate = CommandLine()->ParmValue( "-tickrate", 0 );
 		if ( tickrate > 10 )
 			tickinterval = 1.0f / tickrate;
 	}
+	//
+	
+	//tickinterval = 1.0f / 100; //Forces tickrate at 100Hz - [APG]RoboCop[CL]
 
 	RETURN_META_VALUE(MRES_SUPERCEDE, tickinterval );
 }
@@ -126,7 +130,7 @@ bool CEmptyServerPlugin::Load(	CreateInterfaceFn interfaceFactory, const CreateI
 //---------------------------------------------------------------------------------
 // Purpose: called when the plugin is unloaded (turned off)
 //---------------------------------------------------------------------------------
-void CEmptyServerPlugin::Unload( void )
+void CEmptyServerPlugin::Unload()
 {
 	SH_REMOVE_HOOK(IServerGameDLL, GetTickInterval, gamedll, SH_STATIC(GetTickInterval), false);
 }
@@ -134,23 +138,23 @@ void CEmptyServerPlugin::Unload( void )
 //---------------------------------------------------------------------------------
 // Purpose: called when the plugin is paused (i.e should stop running but isn't unloaded)
 //---------------------------------------------------------------------------------
-void CEmptyServerPlugin::Pause( void )
+void CEmptyServerPlugin::Pause()
 {
 }
 
 //---------------------------------------------------------------------------------
 // Purpose: called when the plugin is unpaused (i.e should start executing again)
 //---------------------------------------------------------------------------------
-void CEmptyServerPlugin::UnPause( void )
+void CEmptyServerPlugin::UnPause()
 {
 }
 
 //---------------------------------------------------------------------------------
 // Purpose: the name of this plugin, returned in "plugin_print" command
 //---------------------------------------------------------------------------------
-const char *CEmptyServerPlugin::GetPluginDescription( void )
+const char *CEmptyServerPlugin::GetPluginDescription()
 {
-	return "Tickrate_Enabler 0.6-APG, updated by RoboCop, original by Didrole";
+	return "Tickrate_Enabler 0.7-APG, updated by RoboCop, original by Didrole";
 }
 
 //---------------------------------------------------------------------------------
@@ -171,7 +175,7 @@ void CEmptyServerPlugin::ServerActivate( edict_t *pEdictList, int edictCount, in
 //---------------------------------------------------------------------------------
 // Purpose: called on level end (as the server is shutting down or going to a new map)
 //---------------------------------------------------------------------------------
-void CEmptyServerPlugin::LevelShutdown( void ) // !!!!this can get called multiple times per map change
+void CEmptyServerPlugin::LevelShutdown() // !!!!this can get called multiple times per map change
 {
 }
 

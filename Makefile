@@ -2,7 +2,7 @@ CC=gcc
 CXX=g++
 
 # Work around hacks in the Source engine
-CFLAGS=-m32 -std=gnu++11 -m32 -msse2 -mfpmath=sse -pipe -fPIC \
+CFLAGS=-m32 -std=gnu++11 -m32 -mmmx -msse -msse2 -mfpmath=sse -pipe -fPIC \
 	-Dstrnicmp=strncasecmp -Dstricmp=strcasecmp -D_vsnprintf=vsnprintf \
 	-D_alloca=alloca -Dstrcmpi=strcasecmp -DPOSIX -DLINUX -D_LINUX
 
@@ -16,7 +16,7 @@ OPTFLAGS=-O2
 # The path to the Source SDK to use
 HL2SDK=./hl2sdk-css
 # The path to the Metamod source tree
-MMSDK=./mmsource-1.10
+MMSDK=./mmsource-1.11
 
 # Include Source SDK directories
 INCLUDES=-I$(HL2SDK)/public -I$(HL2SDK)/public/tier0 -I$(HL2SDK)/public/tier1 -I$(MMSDK)/core
@@ -30,7 +30,7 @@ serverplugin_empty.o:
 	$(CXX) $(CFLAGS) $(OPTFLAGS) $(INCLUDES) -c serverplugin_empty.cpp
 
 Tickrate_Enabler.so:
-	$(CC) -o Tickrate_Enabler.so $(LINKFLAGS) serverplugin_empty.o $(MMSDK)/build/core/metamod.2.$(ENGINE)/sourcehook_sourcehook*.o \
+	$(CC) -o Tickrate_Enabler.so $(LINKFLAGS) serverplugin_empty.o $(MMSDK)/build/core/metamod.2.$(ENGINE)/linux-x86/sourcehook_sourcehook*.o \
 	-l:libtier0_srv.so -l:tier1_i486.a -static-libstdc++ -lm -ldl
 
 clean:
